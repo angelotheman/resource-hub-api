@@ -1,0 +1,6 @@
+# Ignore the virtual environment
+angeloDev/
+
+
+# Ignore the environment files
+.env
