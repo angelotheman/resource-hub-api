@@ -7,8 +7,8 @@ from sqlalchemy.orm import Session
 from app.schemas.user import UserCreate, UserLogin, UserOut
 from app.schemas.user import PasswordResetRequest, PasswordReset
 from app.models.user import User
-from app.utils.security import get_password_hash, verify_password
-from app.utils.security import create_access_token
+from app.auth.auth import get_password_hash, verify_password
+from app.auth.auth import create_access_token
 from app.db import get_db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -81,7 +81,7 @@ def request_password_reset(
     reset_token = create_password_reset_token(user.id)
 
     return {
-        "msg": "Password reset email sent",
+        "message": "Password reset email sent",
         "reset_token": reset_token
     }
 
@@ -101,8 +101,8 @@ def reset_password(data: PasswordReset, db: Session = Depends(get_db)):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    user.hashed_password = hash_password(data.new_password)
+    user.hashed_password = get_password_hash(data.new_password)
 
     db.commit()
 
-    return {"msg": "Password updated successfully"}
+    return {"message": "Password updated successfully"}
