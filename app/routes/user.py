@@ -5,6 +5,7 @@ Routing the user objects
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.schemas.user import UserCreate, UserLogin, UserOut
+from app.schemas.user import PasswordResetRequest, PasswordReset
 from app.models.user import User
 from app.utils.security import get_password_hash, verify_password
 from app.utils.security import create_access_token
@@ -16,7 +17,7 @@ from typing import List
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.UserOut])
+@router.get("/", response_model=List[UserOut])
 def list_users(db: Session = Depends(get_db)):
     """
     List all users
@@ -67,7 +68,7 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 
 @router.post("/request-password-reset")
 def request_password_reset(
-        request: schemas.PasswordResetRequest,
+        request: PasswordResetRequest,
         db: Session = Depends(get_db)):
     """
     Request for a password reset
@@ -86,7 +87,7 @@ def request_password_reset(
 
 
 @router.post("/reset-password")
-def reset_password(data: Schemas.PasswordReset, db: Session = Depends(get_db)):
+def reset_password(data: PasswordReset, db: Session = Depends(get_db)):
     """
     Reset the password
     """
