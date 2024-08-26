@@ -16,6 +16,8 @@ Base.metadata.create_all(bind=engine)
 # Routers to various parts of the app
 app.include_router(user.router, prefix="/users", tags=["users"])
 app.include_router(resource.router, prefix="/resources", tags=["resources"])
+app.include_router(review.router, prefix="/reviews", tags=["reviews"])
+app.include_router(rating.router, prefix="/ratings", tags=["ratings"])
 
 
 @app.get("/")
