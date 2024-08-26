@@ -10,11 +10,12 @@ from sqlalchemy import create_engine
 
 app = FastAPI()
 
-# Database initialization
 engine = create_engine(DATABASE_URL)
 Base.metadata.create_all(bind=engine)
 
+# Routers to various parts of the app
 app.include_router(user.router, prefix="/users", tags=["users"])
+app.include_router(resource.router, prefix="/resources", tags=["resources"])
 
 
 @app.get("/")
