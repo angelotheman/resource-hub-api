@@ -5,13 +5,13 @@ Routing the user objects
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.schemas.user import (
-        UserCreate, UserLogin, UserOut
+        UserCreate, UserLogin, UserOut,
         PasswordResetRequest, PasswordReset
 )
 from app.schemas.resource import ResourceOut
 from app.models.user import User
 from app.auth.auth import (
-        get_password_hash, verify_password
+        get_password_hash, verify_password,
         create_access_token
 )
 from app.db import get_db
