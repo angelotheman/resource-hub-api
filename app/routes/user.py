@@ -4,18 +4,24 @@ Routing the user objects
 """
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
-from app.schemas.user import UserCreate, UserLogin, UserOut
-from app.schemas.user import PasswordResetRequest, PasswordReset
+from app.schemas.user import (
+        UserCreate, UserLogin, UserOut
+        PasswordResetRequest, PasswordReset
+)
 from app.schemas.resource import ResourceOut
 from app.models.user import User
-from app.auth.auth import get_password_hash, verify_password
-from app.auth.auth import create_access_token
+from app.auth.auth import (
+        get_password_hash, verify_password
+        create_access_token
+)
 from app.db import get_db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.logger import setup_logger
 from typing import List
 
 router = APIRouter()
+logger = setup_logger("user")
 
 
 @router.get("/", response_model=List[UserOut])
@@ -45,9 +51,13 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     """
     Register a new user
     """
+    logger.info(f"Attempting to register user with email: {user.email}")
     db_user = db.query(User).filter(User.email == user.email).first()
 
     if db_user:
+        logger.warning(
+                f"Registration failed: Email already registered - \
+                        {user.email}")
         raise HTTPException(status_code=400, detail="Email already registered")
 
     hashed_password = get_password_hash(user.password)
@@ -61,6 +71,7 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
+    logger.info(f"User registered successfully: {user.email}")
     return new_user
 
 
@@ -69,14 +80,18 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     """
     Login an existing user
     """
+    logger.info(f"Login attempt for email: {user.email}")
     db_user = db.query(User).filter(User.email == user.email).first()
 
     if not db_user:
+        logger.warning(f"Failed login attempt for email: {user.email}")
         raise HTTPException(status_code=400, detail="Invalid credentials")
     if not verify_password(user.password, db_user.hashed_password):
+        logger.warning(f"Failed login attempt for email: {user.email}")
         raise HTTPException(status_code=400, detail="Invalid credentials")
 
     access_token = create_access_token(data={"sub": db_user.email})
+    logger.info(f"User logged in successfully: {user.email}")
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -87,12 +102,16 @@ def request_password_reset(
     """
     Request for a password reset
     """
+    logger.info(f"Password reset request for email: {request.email}")
     user = db.query(User).filter(User.email == request.email).first()
 
     if not user:
+        logger.warning(f"Password reset request failed: User not found - \
+                {request.email}")
         raise HTTPException(status_code=404, detail="User not found")
 
     reset_token = create_password_reset_token(user.id)
+    logger.info(f"Password reset token generated for email: {request.email}")
 
     return {
         "message": "Password reset email sent",

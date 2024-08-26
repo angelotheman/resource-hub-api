@@ -8,9 +8,11 @@ from app.models.resource import Resource
 from app.models.user import User
 from app.schemas.resource import ResourceCreate, ResourceOut
 from app.db import get_db
+from app.logger import setup_logger
 from typing import List
 
 router = APIRouter()
+logger = setup_logger("resource")
 
 
 @router.get("/", response_model=List[ResourceOut])
@@ -41,10 +43,12 @@ def create_resource(resource: ResourceCreate, db: Session = Depends(get_db)):
     """
     Creates a new resource
     """
+    logger.info(f"Creating a new resource - {resource.name}")
     db_resource = db.query(Resource).filter(
             Resource.name == resource.name).first()
 
     if db_resource:
+        logger.warning(f"Resource already exists - {resource.name}")
         raise HTTPException(status_code=400, detail="Resource already exists")
 
     new_resource = Resource(**resource.dict())
@@ -53,6 +57,7 @@ def create_resource(resource: ResourceCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_resource)
 
+    logger.info(f"Created new rsesource - {resource.name}")
     return new_resource
 
 
@@ -62,6 +67,7 @@ def update_resource(resource_id: int, resource: ResourceCreate,
     """
     Update the resource by the id
     """
+    logger.info(f"Updating the resource with id: {resource_id}")
     db_resource = db.query(Resource).filter(Resource.id == resource.id).first()
 
     if not db_resource:
@@ -75,6 +81,7 @@ def update_resource(resource_id: int, resource: ResourceCreate,
     db.commit()
     db.refresh(db_resource)
 
+    logger.info(f"Resource {db_resource.name} updated")
     return db_resource
 
 

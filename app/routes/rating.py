@@ -10,8 +10,10 @@ from app.models.rating import Rating
 from app.schemas.rating import RatingCreate, RatingOut
 from app.models.user import User
 from app.models.resource import Resource
+from app.logger import setup_logger
 
 router = APIRouter()
+logger = setup_logger("ratings")
 
 
 @router.post("/", response_model=RatingOut)
@@ -21,6 +23,7 @@ def create_rating(
     """
     Create a new rating
     """
+    logger.info(f"Attempting to create a new rating - {rating.id}")
     db_rating = Rating(**rating.dict(), user_id=current_user.id)
     db.add(db_rating)
     db.commit()
