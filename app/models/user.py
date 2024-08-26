@@ -20,3 +20,5 @@ class User(Base):
     last_name = Column(String)
 
     resources = relationship("Resource", back_populates="user")
+    reviews = relationship("Review", back_populates="user")
+    ratings = relationship("Rating", back_populates="user")

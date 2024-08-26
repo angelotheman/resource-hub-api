@@ -22,3 +22,5 @@ class Resource(Base):
     user_id = Column(Integer, ForeignKey('users.id'))
 
     user = relationship("User", back_populates="resources")
+    reviews = relationship("Review", back_populates="resource")
+    ratings = relationship("Rating", back_populates="resource")

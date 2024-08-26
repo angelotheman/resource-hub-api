@@ -21,6 +21,7 @@ class ResourceOut(ResourceBase):
     Checks to delete a resource
     """
     id: int
+    user_id: int
 
     class Config:
         """
@@ -33,4 +34,4 @@ class ResourceCreate(ResourceBase):
     """
     Validates the creation of a resource
     """
-    pass
+    user_id: int

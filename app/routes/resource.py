@@ -5,6 +5,7 @@ Resource Module for the resources to be used
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.models.resource import Resource
+from app.models.user import User
 from app.schemas.resource import ResourceCreate, ResourceOut
 from app.db import get_db
 from typing import List
@@ -46,12 +47,7 @@ def create_resource(resource: ResourceCreate, db: Session = Depends(get_db)):
     if db_resource:
         raise HTTPException(status_code=400, detail="Resource already exists")
 
-    new_resource = Resource(
-            name=resource.name,
-            descripton=resource.description,
-            url=resource.url,
-            category=resource.category
-        )
+    new_resource = Resource(**resource.dict())
 
     db.add(new_resource)
     db.commit()
