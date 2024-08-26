@@ -3,7 +3,7 @@
 Schema for the resource module
 """
 from pydantic import BaseModel
-from models.category import ResourceCategory
+from app.models.category import ResourceCategory
 
 
 class ResourceBase(BaseModel):

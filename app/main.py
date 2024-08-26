@@ -3,7 +3,7 @@
 This is the entry point of the application
 """
 from fastapi import FastAPI
-from app.routes import user
+from app.routes import user, resource
 from app.models.user import Base
 from app.config import DATABASE_URL
 from sqlalchemy import create_engine

@@ -3,8 +3,8 @@
 Resource module for resource hub to be added
 """
 from sqlalchemy import Column, Integer, String, Text, Enum
-from models.base_model import Base
-from models.category import ResourceCategory
+from app.models.base_model import Base
+from app.models.category import ResourceCategory
 
 
 class Resource(Base):
