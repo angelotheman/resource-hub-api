@@ -4,3 +4,9 @@ angeloDev/
 
 # Ignore the environment files
 .env
+
+# Ignore Pycache files
+__pycache__*
+
+# Ignore test DB files
+test*
