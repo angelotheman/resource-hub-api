@@ -3,6 +3,7 @@
 User class for every user
 """
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from app.models.base_model import Base
 
 
@@ -17,3 +18,5 @@ class User(Base):
     hashed_password = Column(String)
     first_name = Column(String)
     last_name = Column(String)
+
+    resources = relationship("Resource", back_populates="user")

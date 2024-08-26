@@ -2,7 +2,8 @@
 """
 Resource module for resource hub to be added
 """
-from sqlalchemy import Column, Integer, String, Text, Enum
+from sqlalchemy import Column, Integer, String, Text, Enum, ForeignKey
+from sqlalchemy.orm import relationship
 from app.models.base_model import Base
 from app.models.category import ResourceCategory
 
@@ -18,3 +19,6 @@ class Resource(Base):
     description = Column(Text, nullable=True)
     url = Column(String, unique=True)
     category = Column(Enum(ResourceCategory), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'))
+
+    user = relationship("User", back_populates="resources")
