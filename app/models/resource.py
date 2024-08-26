@@ -16,9 +16,10 @@ class Resource(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
-    description = Column(Text, nullable=True)
+    description = Column(Text)
     url = Column(String, unique=True)
     category = Column(Enum(ResourceCategory), nullable=False)
+
     user_id = Column(Integer, ForeignKey('users.id'))
 
     user = relationship("User", back_populates="resources")
