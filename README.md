@@ -16,7 +16,7 @@ Our API-driven platform allows users to:
 * Manage their own contributions
 
 ## Database Design
-![Database Design](resource-api-database.png)
+![Database Design](assets/resource-api-database.png)
 
 ## System Architecture
 
