@@ -47,7 +47,7 @@ jobs:
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.VM_PRIVATE_KEY }}
+          key: ${{ secrets.VULTR_SSH_PRIVATE_KEY }}
           source: "docker-compose.yml,deploy.sh,.env"
           target: "/home/${{ secrets.VM_USER }}/app"
 
