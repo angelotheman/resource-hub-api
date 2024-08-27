@@ -143,6 +143,4 @@ Our API-driven platform allows users to:
 
    For any issues or questions please open an issue on the [GitHub Repository](https://github.com/angelotheman/resource-hub-api/issues)
 
-<p align="center">
-  &copy; angelotheman
-</p>
+**<span style="font-size: 1.2em;">&copy; angelotheman</span>**
