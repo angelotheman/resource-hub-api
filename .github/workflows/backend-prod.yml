@@ -7,8 +7,8 @@ on:
     paths:
       - "Dockerfile"
       - "docker-compose.yml"
-      - ".env"
       - "deploy.sh"
+      - "app/**"
 
 jobs:
   build_and_deploy:
