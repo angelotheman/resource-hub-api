@@ -1,25 +1,8 @@
 services:
-  app:
-    build: .
+  web:
+    image: ewr.vultrcr.com/apiregistry/fastapi-app:${ENV}-${SHA}
     ports:
-      - "8080:8080"
+      - "8000:8000"
     env_file:
-      - .env
-    depends_on:
-      - db
-
-  db:
-    image: mysql:8.0
-    environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_USER=${MYSQL_USER}
-      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
-    volumes:
-      - db_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-
-volumes:
-  db_data:
-
+      - .env      
+    restart: always
