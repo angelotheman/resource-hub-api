@@ -15,6 +15,11 @@ Our API-driven platform allows users to:
 * Rate and review resources
 * Manage their own contributions
 
+## Database Design
+![Database Design](resource-api-database.png)
+
+## System Architecture
+
 ## Technical Stack
 
 * Backend Framework: FastAPI
@@ -28,8 +33,5 @@ Our API-driven platform allows users to:
 * Monitoring: Prometheus and Grafana
 * HTTPS: Certbot (Let's Encrypt)
 * Version Control: GitHub
-
-## System Architecture
-
 
 ## How to Use
