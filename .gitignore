@@ -1,7 +1,6 @@
 # Ignore the virtual environment
 angeloDev/
 
-
 # Ignore the environment files
 .env
 
@@ -13,3 +12,17 @@ test*
 
 # Ignore secrets in terraform
 terraform.tfvars
+
+# Ignore Terraform directories and files
+.terraform/
+terraform.tfstate
+terraform.tfstate.backup
+
+# Ignore Terraform variable files (which might contain sensitive information)
+*.tfvars
+
+# Ignore Terraform plan files
+*.tfplan
+
+# Ignore any HCL files if generated
+*.hcl
