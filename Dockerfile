@@ -4,10 +4,10 @@ WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    libmysqlclient-dev \
+    libmariadb-dev-compat \
+    libmariadb-dev \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
-
 
 COPY requirements.txt .
 
