@@ -10,3 +10,6 @@ __pycache__*
 
 # Ignore test DB files
 test*
+
+# Ignore secrets in terraform
+terraform.tfvars
