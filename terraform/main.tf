@@ -1,31 +1,41 @@
-terraform {
-  required_providers {
-    vultr = {
-      source  = "vultr/vultr"
-      version = "2.10.1"
-    }
-  }
-}
-
 provider "vultr" {
-  api_key = terraform.tfvars.vultr_api_key
+  api_key = var.vultr_api_key
 }
 
-resource "vultr_instance" "example" {
-  plan = "vc2-1c-1gb"
-  region = "ewr"
-  os_id = "387"  # Ubuntu 20.04
+module "ssh_key" {
+  source = "vultr/ssh-key/vultr"
+  version = "1.0.0"
+
+  name       = "terraform-key"
 }
 
-resource "vultr_database" "example" {
-  label = "example-db"
-  region = "ewr"
-  plan = "db-1c-1gb"
-  database_type = "mysql"
-  database_version = "8.0"
+module "instance" {
+  source = "vultr/instance/vultr"
+  version = "1.0.0"
+
+  region      = var.region
+  plan        = "vc2-1c-1gb"
+  os_slug     = "ubuntu_20_04"
+  ssh_key_id  = module.ssh_key.ssh_key_id
+
+  enable_ip_v6 = false
 }
 
-resource "vultr_container_registry" "example" {
-  label = "example-registry"
-  region = "ewr"
+module "mysql" {
+  source = "vultr/database/vultr"
+  version = "1.0.0"
+
+  region = var.region
+  name   = var.mysql_database_name
+  user   = var.mysql_database_user
+  password = var.mysql_database_password
+  plan   = "db-small"
+}
+
+module "container_registry" {
+  source = "vultr/container-registry/vultr"
+  version = "1.0.0"
+
+  region = var.region
+  plan = "registry-free"
 }
