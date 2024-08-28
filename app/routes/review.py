@@ -11,6 +11,7 @@ from app.schemas.review import ReviewCreate, ReviewOut
 from app.models.user import User
 from app.models.resource import Resource
 from app.logger import setup_logger
+from app.auth.user_auth import get_current_user
 
 router = APIRouter()
 logger = setup_logger("reviews")

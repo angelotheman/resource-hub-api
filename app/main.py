@@ -12,6 +12,7 @@ from app.config import DATABASE_URL
 from sqlalchemy import create_engine
 from app.logger import setup_logger
 
+
 app = FastAPI()
 logger = setup_logger("main")
 
@@ -41,3 +42,15 @@ def read_root():
     First return for root file
     """
     return {"message": "Welcome to the API"}
+
+
+"""
+if __name__ == '__main__':
+    uvicorn.run(
+            app,
+            host="0.0.0.0",
+            port=8000,
+            log_level="debug",
+            reload=True
+    )
+"""

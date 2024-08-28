@@ -26,3 +26,6 @@ terraform.tfstate.backup
 
 # Ignore any HCL files if generated
 *.hcl
+
+# Ignore log files
+logs*
