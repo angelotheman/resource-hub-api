@@ -2,7 +2,7 @@
 """
 Rating table in this module
 """
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from app.models.base_model import Base
 
