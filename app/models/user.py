@@ -14,10 +14,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
-    email = Column(String, unique=True, index=True)
-    hashed_password = Column(String)
-    first_name = Column(String)
-    last_name = Column(String)
+    email = Column(String(30), unique=True, index=True)
+    hashed_password = Column(String(60))
+    first_name = Column(String(20))
+    last_name = Column(String(20))
 
     resources = relationship("Resource", back_populates="user")
     reviews = relationship("Review", back_populates="user")
