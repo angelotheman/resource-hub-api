@@ -28,4 +28,4 @@ class RatingOut(RatingBase):
     resource_id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True

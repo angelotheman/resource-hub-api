@@ -28,4 +28,7 @@ class ReviewOut(ReviewBase):
     resource_id: int
 
     class Config:
-        orm_mode = True
+        """
+        Specify config
+        """
+        from_attributes = True
