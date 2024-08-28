@@ -42,15 +42,3 @@ def read_root():
     First return for root file
     """
     return {"message": "Welcome to the API"}
-
-
-"""
-if __name__ == '__main__':
-    uvicorn.run(
-            app,
-            host="0.0.0.0",
-            port=8000,
-            log_level="debug",
-            reload=True
-    )
-"""
