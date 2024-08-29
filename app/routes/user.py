@@ -32,7 +32,7 @@ def list_users(
     """
     List all users
     """
-    logger.info(f"Authenticated user: {current_user} accessed this resource"}
+    logger.info(f"Authenticated user: {current_user} accessed this resource")
     users = db.query(User).all()
     return users
 
