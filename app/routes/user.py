@@ -15,6 +15,7 @@ from app.auth.auth import (
         create_access_token, create_password_reset_token,
         verify_password_reset_token
 )
+from app.auth.user_auth import get_current_user
 from app.db import get_db
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
