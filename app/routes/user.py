@@ -32,6 +32,7 @@ def list_users(
     """
     List all users
     """
+    logger.info(f"Authenticated user: {current_user} accessed this resource"}
     users = db.query(User).all()
     return users
 
@@ -129,18 +130,22 @@ def reset_password(data: PasswordReset, db: Session = Depends(get_db)):
     """
     Reset the password
     """
+    logger.info("Reset the password with this route")
     user_id = verify_password_reset_token(data.token)
 
     if not user_id:
+        logger.warning(f"{user_id} not found")
         raise HTTPException(status_code=404, detail="Invalid or Expired token")
 
     user = db.query(User).filter(User.id == user_id).first()
 
     if not user:
+        logger.warning9(f"User - {user} not found")
         raise HTTPException(status_code=404, detail="User not found")
 
     user.hashed_password = get_password_hash(data.new_password)
 
+    logger.info("Password reset successful")
     db.commit()
 
     return {"message": "Password updated successfully"}
@@ -151,6 +156,7 @@ def logout():
     """
     Invalidate the current user's token (on the client-side).
     """
+    logger.info("Logout successful")
     return {
         "message": "Successfully logged out. Please \
                 discard the token on the client-side."}
