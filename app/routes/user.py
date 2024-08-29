@@ -26,7 +26,9 @@ logger = setup_logger("user")
 
 
 @router.get("/", response_model=List[UserOut])
-def list_users(db: Session = Depends(get_db)):
+def list_users(
+        db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)):
     """
     List all users
     """
@@ -35,7 +37,9 @@ def list_users(db: Session = Depends(get_db)):
 
 
 @router.get("/{user_id}/resources", response_model=List[ResourceOut])
-def get_resources_for_user(user_id: int, db: Session = Depends(get_db)):
+def get_resources_for_user(
+        user_id: int, db: Session = Depends(get_db),
+        current_user: User = Depends(get_current_user)):
     """
     Get resources for a specific user
     """
@@ -140,3 +144,13 @@ def reset_password(data: PasswordReset, db: Session = Depends(get_db)):
     db.commit()
 
     return {"message": "Password updated successfully"}
+
+
+@router.post("/logout")
+def logout():
+    """
+    Invalidate the current user's token (on the client-side).
+    """
+    return {
+        "message": "Successfully logged out. Please \
+                discard the token on the client-side."}
