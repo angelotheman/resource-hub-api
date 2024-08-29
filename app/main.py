@@ -14,7 +14,19 @@ from sqlalchemy import create_engine
 from app.logger import setup_logger
 
 
-app = FastAPI()
+app = FastAPI(
+        title="Resource HUB API Application",
+        version="1.0.0",
+        openapi_tags=[
+            {"name": "users", "description": "User operations"},
+            {"name": "resources", "description": "Resource operations"},
+            {"name": "reviews", "description": "Review operations"},
+            {"name": "ratings", "description": "Rating operations"}
+        ],
+        openapi_security=[{"BearerAuth": []}]
+    )
+
+
 logger = setup_logger("main")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 

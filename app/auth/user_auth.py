@@ -11,7 +11,7 @@ from app.db import get_db
 from app.models.user import User
 from app.config import SECRET_KEY, ALGORITHM
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
 
 
 def get_current_user(
